@@ -10,6 +10,16 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
+      routes:
+        - id: path_route
+          uri: http://cxytiandi.com
+          predicates:
+            - Path=/course
+        - id: path3_route
+          uri: http://cxytiandi.com
+          predicates:
+            - Path=/blog/**
+
 
 eureka:
   client:
