@@ -52,7 +52,7 @@ public class GatewayConfiguration {
      * @return
      */
     @Bean
-    @Order(-1)
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public GlobalFilter sentinelGatewayFilter() {
         return new SentinelGatewayFilter();
     }
@@ -70,7 +70,7 @@ public class GatewayConfiguration {
     }
 
     /**
-     * 配置限流规则
+     * 配置网关限流规则
      */
     private void initGatewayRules(String resource) {
         Set<GatewayFlowRule> rules = new HashSet<>();

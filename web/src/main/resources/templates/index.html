@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script type="application/javascript" src="https://cdn.staticfile.org/angular.js/1.4.6/angular.min.js"></script>
+    <script type="application/javascript">
+        <!-- 创建一个Angular模块 -->
+        var app = angular.module('myApp', []);
+        <!-- 控制器用于控制AngulatJS应用 -->
+        app.controller('myCtrl', function($scope) {
+            $scope.firstName2= "John";
+            $scope.lastName2= "Doe";
+        });
+        <!-- 自定义过滤器 反转字符串-->
+        app.filter('reverse', function() {
+            return function(text) {
+                return text.split("").reverse().join("");
+            }
+        });
+    </script>
+</head>
+<body>
+<!-- ng-app告诉AngularsJs div元素是AngularJS应用程序的所有者 -->
+<!-- ng-controller 指明了控制器 -->
+<div ng-app="myApp" ng-controller="myCtrl" ng-init="names=['Jani','Hege','Kai']">
+    <!-- ng-model 把输入域的值绑定到程序变量name -->
+    <p>名字 : <input type="text" ng-model="name"></p>
+    <h1>Hello {{name}}</h1>
+    <!-- ng-init 初始化变量的值 -->
+    <p>年龄:<input type="text" ng-init="firstName='John'"></p> <br/>
+    <!-- ng-bind 绑定变量的值到标签的innerhtml中 -->
+    我的年龄是<span ng-bind="firstName"></span>
+    <!-- AngularJS 表达式写在双大括号内：{{ expression }}。 -->
+    测试Angulars表达式:{{5+5}}<br/>
+    <!--  这里的ng-model实现了双向绑定，firstName2修改之后全局的也会改变-->
+    名: <input type="text" ng-model="firstName2"><br>
+    姓: <input type="text" ng-model="lastName2"><br>
+    <br>
+    姓名: {{firstName2 + " " + lastName2}}
+    <!-- angularJs 相关指令 -->
+    <p>使用 repeat循环数组</p>
+    <ul>
+        <!-- ng-repeat 指令对于集合中（数组中）的每个项会 克隆一次 HTML 元素 -->
+        <li ng-repeat="x in names">
+            {{ x }}
+        </li>
+    </ul>
+    <!-- angularJS 过滤器 如下:数字转货币 -->
+    总价:{{ 100.00 | currency  }}
+    {{firstName2}}反转后的字符串:{{ firstName2 | reverse}}
+</div>
+</body>
+</html>
+<!--
+Scope(作用域) 是应用在 HTML (视图) 和 JavaScript (控制器)之间的纽带。
+Scope 是一个对象，有可用的方法和属性。
+Scope 可应用在视图和控制器上。
+
+
+针对有多个作用域的情况,所有的应用都有一个 $rootScope，它可以作用在 ng-app 指令包含的所有 HTML 元素中。
+-->

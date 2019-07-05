@@ -1,6 +1,9 @@
 package com.spring.clouldsentinel.resource;
 
+import com.alibaba.csp.sentinel.Entry;
+import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.spring.clouldsentinel.util.ExceptionUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +26,20 @@ public class HelloResource {
         return "测试限流成功";
     }
 
-    @SentinelResource("resource")
     @RequestMapping("/sentinel/hello")
     public String hello() {
-        return "测试默认限流";
+        //使用原始方式进行频率限制
+        Entry entry = null;
+        try {
+            entry = SphU.entry("resource2");
+            return "测试默认限流";
+        } catch (BlockException e1) {
+           return "超过频率控制啦.....";
+        } finally {
+            if (entry != null) {
+                entry.exit();
+            }
+        }
     }
     //通过注解限流并自定义限流逻辑
     @SentinelResource(value = "resource2", blockHandler = "handleException", blockHandlerClass = {ExceptionUtil.class})

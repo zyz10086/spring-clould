@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>大量数据展示</title>
+    <script type="application/javascript" src="https://cdn.bootcss.com/angular.js/1.7.0/angular.min.js"></script>
+    <script type="application/javascript" src="https://cdn.bootcss.com/angular.js/1.7.0/angular-route.min.js"></script>
+    <script type="application/javascript">
+        angular.module('myApp',['ngRoute']).
+            config(['$routeProvider',function ($routeProvider) {
+            $routeProvider.when('/index',{templateUrl:'/index.html'}).
+            otherwise({redirectTo:'/'});
+        }]);
+    </script>
+</head>
+<body>
+<!-- ng-app告诉AngularsJs div元素是AngularJS应用程序的所有者 -->
+<!-- ng-controller 指明了控制器 -->
+<div ng-app="myApp" ng-init="names=['Jani','Hege','Kai']">
+    <select>
+        <option value="">请选择</option>
+        <option ng-repeat="name in names">{{ name }}</option>
+    </select>
+    <table>
+        <tr>
+            <td>用户名</td>
+        </tr>
+        <tr ng-repeat="name in names">
+            <td>{{ name }}</td>
+        </tr>
+    </table>
+    点击事件:<button ng-click="count=count+1"> 点我数字加1</button>
+    {{ count }}<br/>
+    <!-- novalidate 禁用浏览器默认的验证 -->
+    <form name="myForm" novalidate>
+        输入校验:
+        用户名:<input  type="text" ng-model="username" required/>
+        <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid"><span ng-show="myForm.user.$error.required">用户名是必须的</span></span>
+        <button type="submit">提交</button>
+    </form>
+    <div ng-include="'index.html'">
+        {{firstName}}
+    </div>
+    跳转到主页:<a href="#!/index">跳转到主页</a>
+
+</div>
+</body>
+</html>

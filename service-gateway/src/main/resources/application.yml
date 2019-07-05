@@ -19,8 +19,6 @@ spring:
           uri: http://cxytiandi.com
           predicates:
             - Path=/blog/**
-
-
 eureka:
   client:
     service-url:
