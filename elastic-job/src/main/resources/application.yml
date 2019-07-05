@@ -1,0 +1,8 @@
+regCenter:
+  serverList: 127.0.0.1:2181
+  namespace: elastic-job-lite-test
+
+myElasticJob:
+  cron: 0/10 * * * * ?
+  shardingTotalCount: 1
+  shardingItemParameters: 0=Chengdu0

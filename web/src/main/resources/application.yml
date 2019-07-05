@@ -1,0 +1,13 @@
+spring:
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  mvc:
+    static-path-pattern: /static/**
+server:
+  port: 8080
