@@ -2,21 +2,14 @@ package com.spring.letcode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class StackTest {
 
     //0  48  9 57  2,1,5
     public static void main(String[] args) {
-        ListNode head = new ListNode(2);
-        ListNode node2 = new ListNode(1);
-        ListNode node3 = new ListNode(5);
-        node2.next = node3;
-        head.next = node2;
-
-        for (Integer temp : nextLargerNodes2(head)) {
-            System.out.println(temp);
-        }
-
+        NestedInteger ni=deserialize("[-1]");
+        System.out.println("测试结束");
     }
 
     //验证二叉树的前序序列化
@@ -64,24 +57,63 @@ public class StackTest {
 
     //"[123,[456,[789]]]"
     //123
-    public NestedInteger deserialize(String s) {
-        if(s==null)
+    public static NestedInteger deserialize(String s) {
+        if(s==null || s=="")
             return null;
-        NestedInteger result=new NestedInteger();
+        NestedInteger result=null;
+        Stack<String> values=new Stack<>();
         if(!s.startsWith("[")){
-            result.setInteger(Integer.parseInt(s));
+            result=new NestedInteger(Integer.parseInt(s));
         }else{
-            String temp;
+            String temp="";
             for(char c:s.toCharArray()){
                 if(c=='['){
-                    temp="";
+                    values.push("[");
+                    continue;
                 }
                 if(c==','){
-
+                    values.push(temp);
+                    temp="";
+                    continue;
                 }
+                if(c==']'){
+                    if(temp!=""){
+                        values.push(temp);
+                        temp="";
+                    }
+                    String tempstr=null;
+                    List<NestedInteger> datas=new ArrayList<>();
+                    while(!values.isEmpty()){
+                        tempstr=values.pop();
+                        if("[".equals(tempstr))
+                            break;
+                        if(tempstr==""){
+                            datas.add(new NestedInteger());
+                            continue;
+                        }
+                        datas.add(new NestedInteger(Integer.parseInt(tempstr)));
+                    }
+                    NestedInteger tt=new NestedInteger();
+                    if(datas.size()>1){
+                        tt=new NestedInteger();
+                        tt.getList().addAll(datas);
+                    }else if(datas.size()==1){
+                        if(datas.get(0).getInteger()!=null){
+                            tt.setInteger(datas.get(0).getInteger());
+                        }
+                    }
+                    if(result!=null){
+                        tt.getList().add(result);
+                    }else{
+                        result=tt;
+                    }
+                    result=tt;
+                    continue;
+                }
+                temp+=c;
             }
         }
-        return null;
+        return result;
     }
 
 }
@@ -97,7 +129,7 @@ class ListNode {
 
 class NestedInteger {
     Integer value;
-    List<NestedInteger> nestedIntegers;
+    List<NestedInteger> nestedIntegers=new ArrayList<>();
     // Constructor initializes an empty nested list.
     public NestedInteger(){}
 
