@@ -1,7 +1,5 @@
 package com.spring.letcode.stack;
 
-import java.util.*;
-
 /**
  * @author wangxia
  * @date 2019/7/9 10:37
@@ -10,68 +8,66 @@ import java.util.*;
 public class Medium {
 
     public static void main(String[] args) {
-        System.out.println(find132pattern(new int[]{-2,1,2,-2,1,2}));
+        System.out.println(decodeAtIndex("abc", 3));
     }
-    public static boolean find132pattern(int[] nums) {
-        for(int i=0;i<nums.length;i++){
-            if(nums.length-i<2){
-                return false;
-            }
-            int[] temp=new int[3];
-            temp[0]=nums[i];
-            int index=0;
-            for(int j=i+1;j<nums.length;j++){
-                if(index==0 && nums[j]>temp[0]){
-                    index++;
-                    temp[index]=nums[j];
-                    continue;
+
+    public static String decodeAtIndex(String S,int K){
+        char[] chars=S.toCharArray();
+        Long size=0L;
+        String res="";
+        int i;
+        //计算出所需字符串长度
+        for(i=0;i<chars.length;i++){
+            char temp=chars[i];
+            if(temp>=49 && temp<=57){
+                size*=(temp-'0');
+                if(size>K){
+                    break;
                 }
-                if(nums[j]>temp[0] && nums[j]<temp[1])
-                    return true;
-                if(nums[j]>temp[1])
-                    temp[1]=nums[j];
+                continue;
+            }
+            size++;
+            if(size>K){
+                break;
             }
         }
-        return false;
-    }
-
-
-    public static List<List<Integer>> permute(int[] nums) {
-        // init output list
-        List<List<Integer>> output = new LinkedList();
-
-        // convert nums into list since the output is a list of lists
-        ArrayList<Integer> nums_lst = new ArrayList<Integer>();
-        for (int num : nums)
-            nums_lst.add(num);
-
-        int n = nums.length;
-        //调用回溯算法
-        backTrack(n, nums_lst, output, 0);
-        return output;
-    }
-
-    /**
-     *
-     * @param len     字符串长度
-     * @param numList
-     * @param output
-     * @param first
-     */
-    public static void backTrack(int len,List<Integer> numList,List<List<Integer>> output,int first){
-        //判断是否终止
-        if(first==len){
-            output.add(new ArrayList<>(numList));
+        //逆向找出字符
+        for(i=i==chars.length?i-1:i;i>=0;i--){
+            K%=size;
+            char temp=chars[i];
+            if(K==0 &&  !(temp>=49 && temp<=57)){
+                return chars[i]+"";
+            }
+            if(temp>=49 && temp<=57){
+                size/=(temp-'0');
+            }else{
+                size--;
+            }
         }
-        for(int i=first;i<len;i++){
-            //交换
-            Collections.swap(numList,first,i); //交换
-            //下一个
-            backTrack(len,numList,output,first+1);
-            //还原数据
-            Collections.swap(numList,first,i); //交换
-        }
+        return res;
     }
 
+    public static String removeKdigits(String num, int k) {
+        if (num.length() <= k)
+            return "0";
+        char[] chars = num.toCharArray();
+        String newnum = "";
+        int index = 0;
+        int size = chars.length - k;
+        for (int i = 0; i < size; i++) {
+            for (int j = index; j <= i + k; j++) {
+                if (chars[index] > chars[j]) {
+                    index = j;
+                }
+            }
+            if (!(chars[index] == '0' && newnum.equals(""))) {
+                newnum += chars[index];
+            }
+            if (index != chars.length - 1) {
+                index = index + 1;
+            }
+        }
+        return newnum==""?"0":newnum;
+    }
 }
 

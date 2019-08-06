@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: post-repeat
+  redis:
+    host: 127.0.0.1:6379
+    port: 6379
+    timeout: 10000
+    jedis:
+      pool:
+        max-idle: 300
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    cache: false
+  mvc:
+    static-path-pattern: /static/**
+server:
+  port: 8090

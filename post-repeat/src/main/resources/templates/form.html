@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>防止表单重复提交</title>
+</head>
+<body>
+<form action="/add" method="post">
+    token:<input type="text" name="token" th:value="${token}"><br/>
+    用户名:<input type="text" name="username" th:value="${username}"><br/>
+    商品名:<input type="text" name="goodsName" th:value="${goodsName}"><br/>
+    <button type="submit">提交订单</button>
+</form>
+</body>
+</html>
