@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: provider1
+  sleuth:
+    sampler:
+      percentage: 1.0 #将采样比例1.0是全部都采集，默认是0.1
+  zipkin:
+    sender:
+      type: web
+    service:
+      name: ${spring.application.name}
+    base-url: http://localhost:9005
+  kafka:
+    bootstrap-servers: localhost:9092
+server:
+  port: 8091
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8171/eureka/
