@@ -5,6 +5,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.Set;
+
 /**
  * @author wangxia
  * @date 2019/7/26 14:45
@@ -49,6 +51,14 @@ public class JedisUtils {
 
     public void addKey(String key,String value){
         redisTemplate.opsForValue().set(key,value);
+    }
+
+    public void setAdd(String setname,String setvalue){
+        redisTemplate.opsForSet().add(setname,setvalue);
+    }
+
+    public Set findDifference(String setname,String setname2){
+        return redisTemplate.opsForSet().difference(setname,setname2);
     }
 
 }

@@ -11,10 +11,10 @@ spring:
           enabled: true
           lowerCaseServiceId: true
       routes:
-        - id: path_route
-          uri: http://cxytiandi.com
+        - id: path_route  #id为Eureka注册的服务名
+          uri: http://cxytiandi.com  #真正的服务地址
           predicates:
-            - Path=/course
+            - Path=/course   #请求路径
         - id: path3_route
           uri: http://cxytiandi.com
           predicates:

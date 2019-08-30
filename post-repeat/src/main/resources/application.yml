@@ -2,7 +2,7 @@ spring:
   application:
     name: post-repeat
   redis:
-    host: 127.0.0.1:6379
+    host: 10.3.117.43
     port: 6379
     timeout: 10000
     jedis:

@@ -12,5 +12,4 @@ public class ClouldConfigServerApplication {
         SpringApplication.run(ClouldConfigServerApplication.class, args);
         System.out.println("启动成功");
     }
-
 }
